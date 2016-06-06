@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="http://vjs.zencdn.net/5.10.2/video-js.css" rel="stylesheet">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="http://vjs.zencdn.net/5.10.2/video.js"></script>
+{% endblock %}
+
+{% block title %}
+    Playing {{ video.name }}
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Filename: {{ video.name }}</h1>
+            <video id="my-video" class="video-js" controls preload="auto" width="640" height="264" data-setup="{}">
+                <source src="{{ path('play', {'id': video.id}) }}" type="video/mp4">
+            </video>
+        </div>
+    </div>
+{% endblock %}
