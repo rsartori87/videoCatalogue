@@ -15,12 +15,17 @@
 {% endblock %}
 
 {% block body %}
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Filename: {{ video.name }}</h1>
-            <video id="my-video" class="video-js" controls preload="auto" width="640" height="264" data-setup="{}">
-                <source src="{{ path('play', {'id': video.id}) }}" type="video/mp4">
-            </video>
+    {% include "fragment/menu.html.twig" %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Filename: {{ video.name }}</h1>
+                <div class="embed-responsive embed-responsive-16by9">
+                    <video id="my-video" class="video-js" controls preload="auto" data-setup="{}" class="embed-responsive-item">
+                        <source src="{{ path('play', {'id': video.id}) }}" type="video/mp4">
+                    </video>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

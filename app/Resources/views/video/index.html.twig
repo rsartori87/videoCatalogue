@@ -5,27 +5,35 @@
 {% endblock %}
 
 {% block body %}
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Indice video</h1>
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Nome</th>
-                    <th>Path</th>
-                </tr>
-                </thead>
-                <tbody>
+    {% include "fragment/menu.html.twig" %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Video List</h1>
+            </div>
+            <div class="grid col-md-12">
                 {% for file in files %}
-                    <tr>
-                        <td>{{ file.id }}</td>
-                        <td><a href="{{ path('video', {'id': file.id}) }}">{{ file.name }}</a></td>
-                        <td>{{ file.path }}</td>
-                    </tr>
+                    <a href="{{ path("video", {"id": file.id}) }}"><img src="/thumbnails{{ asset(file.thumbnail) }}" class="img-responsive grid-item"></a>
                 {% endfor %}
-                </tbody>
-            </table>
+            </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://npmcdn.com/masonry-layout@4.0/dist/masonry.pkgd.min.js"></script>
+    <script>
+        $('.grid').masonry({
+            itemSelector: '.grid-item',
+            columnWidth: 200
+        });
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .grid-item { width: 20%; }
+    </style>
 {% endblock %}

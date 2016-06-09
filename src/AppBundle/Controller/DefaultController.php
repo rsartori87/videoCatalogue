@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Video;
+use FFMpeg\Coordinate\TimeCode;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -32,14 +33,24 @@ class DefaultController extends Controller
      */
     public function updateAction(Request $request)
     {
+        $imageBase = $this->get('kernel')->getRootDir().'/../web/thumbnails/';
         $em = $this->getDoctrine()->getManager();
         $finder = new Finder();
         $finder->files()->in('/home/sonic/lavoro/shared/Backup/')->name('/\.mp4$/');
+        $ffmpeg = $this->get('dubture_ffmpeg.ffmpeg');
+        $i = 1;
         foreach ($finder as $file) {
             $video = new Video();
             $video->setPath($file->getRealPath());
             $video->setName($file->getFilename());
+            $videoFile = $ffmpeg->open($file->getRealPath());
+            $thumb = $i.'.jpg';
+            $videoFile
+                ->frame(TimeCode::fromSeconds(120))
+                ->save($imageBase.$thumb);
+            $video->setThumbnail($thumb);
             $em->persist($video);
+            $i++;
         }
         $em->flush();
         return $this->redirectToRoute('homepage');

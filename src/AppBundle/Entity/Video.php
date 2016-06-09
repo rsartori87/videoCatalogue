@@ -34,6 +34,11 @@ class Video
     private $name;
 
     /**
+     * @ORM\Column(type="text")
+     */
+    private $thumbnail;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -71,5 +76,21 @@ class Video
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getThumbnail()
+    {
+        return $this->thumbnail;
+    }
+
+    /**
+     * @param mixed $thumbnail
+     */
+    public function setThumbnail($thumbnail)
+    {
+        $this->thumbnail = $thumbnail;
     }
 }
