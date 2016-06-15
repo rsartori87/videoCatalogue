@@ -74,3 +74,21 @@ dubture_f_fmpeg:
   ffprobe_binary: /usr/bin/ffprobe
   binary_timeout: 300 # Use 0 for infinite
   threads_count: 4
+
+old_sound_rabbit_mq:
+    connections:
+        default:
+            host: '192.168.1.190'
+            port: 5672
+            user: 'test'
+            password: 'test'
+            vhost: '/'
+            lazy: false
+            connection_timeout: 3
+            read_write_timeout: 3
+            keepalive: false
+            heartbeat: 0
+    producers:
+        upload_directory:
+            connection: default
+            exchange_options: {name: 'upload-directory', type: direct}
