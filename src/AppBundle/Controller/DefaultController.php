@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Video;
+use AppBundle\Form\SearchFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -17,11 +18,22 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $files = $this->getDoctrine()
-            ->getRepository('AppBundle:Video')
-            ->findAll();
+        $query = "*:*";
+        $form = $this->createForm(SearchFormType::class);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $query = "path:".$form->getData()['search'];
+        }
+
+        $client = $this->get('solarium.client');
+        $select = $client->createSelect();
+        $select->setQuery($query)->setRows(2000);
+        $select->addSort('modified_date', $select::SORT_DESC);
+        $files = $client->select($select);
         return $this->render('video/index.html.twig', [
-            'files' => $files
+            'files' => $files,
+            'searchForm' => $form->createView()
         ]);
     }
 
@@ -32,11 +44,14 @@ class DefaultController extends Controller
     {
         $finder = new Finder();
         $finder->files()->in('/home/sonic/lavoro/shared/Backup/')->name('/\.mp4$/');
-        $i = 1;
         foreach ($finder as $file) {
-            $msg = array('path' => $file->getRealPath(), 'filename' => $file->getFilename(), 'number' => $i);
+            $msg = [
+                'path' => $file->getRealPath(),
+                'filename' => $file->getFilename(),
+                'number' => md5($file->getFilename()),
+                'modifiedDate' => $file->getMTime()
+            ];
             $this->get('old_sound_rabbit_mq.upload_directory_producer')->publish(json_encode($msg));
-            $i++;
         }
         return $this->redirectToRoute('homepage');
     }

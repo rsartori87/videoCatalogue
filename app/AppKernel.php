@@ -16,7 +16,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
-            new Dubture\FFmpegBundle\DubtureFFmpegBundle(),
+            new Nelmio\SolariumBundle\NelmioSolariumBundle(),
             new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
             new AppBundle\AppBundle(),
         ];

@@ -39,6 +39,11 @@ class Video
     private $thumbnail;
 
     /**
+     * @ORM\Column(type="date")
+     */
+    private $modifiedDate;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -92,5 +97,21 @@ class Video
     public function setThumbnail($thumbnail)
     {
         $this->thumbnail = $thumbnail;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getModifiedDate()
+    {
+        return $this->modifiedDate;
+    }
+
+    /**
+     * @param mixed $modifiedDate
+     */
+    public function setModifiedDate($modifiedDate)
+    {
+        $this->modifiedDate = $modifiedDate;
     }
 }

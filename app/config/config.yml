@@ -69,12 +69,6 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
-dubture_f_fmpeg:
-  ffmpeg_binary: /usr/bin/ffmpeg
-  ffprobe_binary: /usr/bin/ffprobe
-  binary_timeout: 300 # Use 0 for infinite
-  threads_count: 4
-
 old_sound_rabbit_mq:
     connections:
         default:
@@ -92,3 +86,16 @@ old_sound_rabbit_mq:
         upload_directory:
             connection: default
             exchange_options: {name: 'upload-directory', type: direct}
+
+nelmio_solarium:
+    endpoints:
+        default:
+            scheme: http
+            host: localhost
+            port: 8983
+            path: /solr
+            core: video
+            timeout: 5
+    clients:
+        default:
+            endpoints: [default]

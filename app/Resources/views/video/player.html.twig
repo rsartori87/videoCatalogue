@@ -21,7 +21,7 @@
             <div class="col-md-12">
                 <h1>Filename: {{ video.name }}</h1>
                 <div class="embed-responsive embed-responsive-16by9">
-                    <video id="my-video" class="video-js" controls preload="auto" data-setup="{}" class="embed-responsive-item">
+                    <video id="my-video" controls preload="auto" data-setup="{}" class="video-js embed-responsive-item">
                         <source src="{{ path('play', {'id': video.id}) }}" type="video/mp4">
                     </video>
                 </div>
