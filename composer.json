@@ -30,7 +30,8 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "doctrine/doctrine-migrations-bundle": "^1.1",
         "php-amqplib/rabbitmq-bundle": "^1.10",
-        "nelmio/solarium-bundle": "^2.2"
+        "nelmio/solarium-bundle": "^2.2",
+        "stomp-php/stomp-php": "^4.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

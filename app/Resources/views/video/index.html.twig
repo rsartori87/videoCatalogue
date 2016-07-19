@@ -6,45 +6,57 @@
 
 {% block body %}
     {% include "fragment/menu.html.twig" %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-                <h2>Ricerca</h2>
-                {{ form_start(searchForm) }}
-                    {{ form_widget(searchForm) }}
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                {{ form_end(searchForm) }}
+    <div ng-controller="SearchController as search" ng-scroll="search.scroll($event)">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <h2>Ricerca</h2>
+                    <form novalidate ng-submit="search.send()">
+                        <div class="form-group">
+                            <label for="search">Search</label>
+                            <input type="text" class="form-control" id="search" name="search" placeholder="Search" ng-model="search.key">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>Video List</h1>
-            </div>
-            <div class="grid col-md-12">
-                {% for file in files %}
-                    <a href="{{ path("video", {"id": file.id}) }}"><img src="/thumbnails{{ asset(file.thumbnail) }}" class="img-responsive grid-item"></a>
-                {% endfor %}
+        <br>
+        {% verbatim %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12 masonry">
+                    <a ng-repeat="immagine in search.immagini" href="/video/{{immagine.id}}">
+                        <img ng-src="/thumbnails/{{immagine.thumbnail}}" class="item">
+                    </a>
+                </div>
             </div>
         </div>
+        {% endverbatim %}
     </div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="https://npmcdn.com/masonry-layout@4.0/dist/masonry.pkgd.min.js"></script>
-    <script>
-        $('.grid').masonry({
-            itemSelector: '.grid-item',
-            columnWidth: 200
-        });
-    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <script src="{{ asset('ngscroll.min.js') }}"></script>
+    <script src="{{ asset('app.js') }}"></script>
 {% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
     <style>
-        .grid-item { width: 20%; }
+        .masonry {
+            column-count: 4;
+            column-gap: 1em;
+            -moz-column-count: 4;
+            -moz-column-gap: 1em;
+        }
+
+        .item {
+            display: inline-block;
+            margin: 0 0 1em;
+            width: 100%;
+        }
     </style>
 {% endblock %}
