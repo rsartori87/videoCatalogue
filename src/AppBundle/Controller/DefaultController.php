@@ -80,7 +80,7 @@ class DefaultController extends Controller
     public function updateAction(Request $request)
     {
         $finder = new Finder();
-        $finder->files()->in('/home/sonic/lavoro/shared/Backup/')->name('/\.mp4$/');
+        $finder->files()->in($this->getParameter('video_path'))->name('/\.mp4$/');
         $stomp = new StatefulStomp(new Client('tcp://localhost:61613'));
         foreach ($finder as $file) {
             $msg = [
