@@ -1,0 +1,26 @@
+{
+  "name": "videoCatalogue",
+  "version": "1.0.0",
+  "description": "videoCatalogue ==============",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rsartori87/ghetto-video-player.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rsartori87/ghetto-video-player/issues"
+  },
+  "homepage": "https://github.com/rsartori87/ghetto-video-player#readme",
+  "devDependencies": {
+    "webpack": "^1.13.1"
+  }
+}
